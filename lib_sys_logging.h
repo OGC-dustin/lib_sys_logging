@@ -53,4 +53,9 @@ enum e_lib_sys_logging_status lib_sys_logging_set_log(
     ...
     );
 
+#ifdef DEPLOYMENT_OPTION_RUN_UNIT_TESTS
+#include <stdbool.h>
+bool run_unit_tests__lib_sys_logging( void );
+#endif /* DEPLOYMENT_OPTION_RUN_UNIT_TESTS */
+
 #endif /* LIB_SYS_LOGGING_H */
