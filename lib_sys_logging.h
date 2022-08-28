@@ -1,6 +1,31 @@
 #ifndef LIB_SYS_LOGGING_H
 #define LIB_SYS_LOGGING_H
 
+/* =====================================================================================================================
+ *                                                                                                   DEFAULT DEFINITIONS
+ * =====================================================================================================================
+ */
+/* define LIB_SYS_LOGGING_LEVEL_LOCAL in deployment header to change the default threshold level of local logs
+ * that are displayed.
+ */
+#ifndef LIB_SYS_LOGGING_LEVEL_LOCAL
+#define LIB_SYS_LOGGING_LEVEL_LOCAL enum_LIB_SYS_LOGGING_LEVEL_DEBUG
+#warning "LIB_SYS_LOGGING: DEFAULT value used for LIB_SYS_LOGGING_LEVEL_LOCAL"
+#endif /* LIB_SYS_LOGGING_LEVEL_LOCAL */
+
+/* define LIB_SYS_LOGGING_MESSAGE_SIZE in deployment header to change the default string length limit when processing
+ * and storing logs.
+ */
+#ifndef LIB_SYS_LOGGING_MESSAGE_SIZE
+#define LIB_SYS_LOGGING_MESSAGE_SIZE 128
+#warning "LIB_SYS_LOGGING: DEFAULT value used for LIB_SYS_LOGGING_MESSAGE_SIZE"
+#endif /* LIB_SYS_LOGGING_MESSAGE_SIZE */
+
+/* =====================================================================================================================
+ *                                                                                           Enumerations and Structures
+ * =====================================================================================================================
+ */
+/*                                                                                                     Library Status */
 enum e_lib_sys_logging_status
 {
     enum_LIB_SYS_LOGGING_STATUS_ERROR = -1,
@@ -30,24 +55,18 @@ struct s_lib_sys_logging_status
     void( *local_output_target )( char*, size_t );
 };
 
-enum e_lib_sys_logging_status lib_sys_logging_init( 
-    struct s_lib_sys_logging_status*    status,
-    enum e_lib_sys_logging_level        level,
-    void( *target )( char*, size_t )
-    );
-
-enum e_lib_sys_logging_status lib_sys_logging_get_threshold_local(
-    struct s_lib_sys_logging_status*    status,
+enum e_lib_sys_logging_status
+lib_sys_logging_get_threshold_local(
     enum e_lib_sys_logging_level*       level
     );
 
-enum e_lib_sys_logging_status lib_sys_logging_set_threshold_local(
-    struct s_lib_sys_logging_status*    status,
+enum e_lib_sys_logging_status
+lib_sys_logging_set_threshold_local(
     enum e_lib_sys_logging_level        level
     );
 
-enum e_lib_sys_logging_status lib_sys_logging_set_log(
-    struct s_lib_sys_logging_status*    status,
+enum e_lib_sys_logging_status
+lib_sys_logging_set_log(
     enum e_lib_sys_logging_level        level,
     char*                               buffer,
     ...
@@ -55,7 +74,10 @@ enum e_lib_sys_logging_status lib_sys_logging_set_log(
 
 #ifdef DEPLOYMENT_OPTION_RUN_UNIT_TESTS
 #include <stdbool.h>
-bool run_unit_tests__lib_sys_logging( void );
+bool
+run_unit_tests__lib_sys_logging(
+    void
+    );
 #endif /* DEPLOYMENT_OPTION_RUN_UNIT_TESTS */
 
 #endif /* LIB_SYS_LOGGING_H */
